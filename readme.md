@@ -104,7 +104,7 @@ graph LR;
 
 # To do list : 
  - Get game states working
-    - [ ] Each game state carries out scenes correctly : display scene and objects, moves on when appropriate 
+    - [x] Each game state carries out scenes correctly : display scene and objects, moves on when appropriate 
  - Finish character classes
     - [ ] Get all movement physics working
     - [ ] Character changes sprite under certain actions and can change back automatically
@@ -112,7 +112,7 @@ graph LR;
  - Additional features : 
     - [ ] Sound
        - [ ] Event activated sounds
-       - [ ] Dynamic sounds based on environment
+       - ---[ ] Dynamic sounds based on environment--- not very applicable in most situations
     - [ ] Settings (Keybinds, display size, game values)
     - [ ] Tutorial (custom gamemodes which teaches user or allows user to train)
     - [ ] More sprite actions

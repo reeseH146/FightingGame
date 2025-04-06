@@ -1,6 +1,6 @@
 # --- This is a pygame fighting game ---
-import SpriteClass
-import UIScript
+import SpriteClass # Creates sprites
+import UIScript # Creates UI objects such as buttons and text
 import pygame as pg
 pg.init()
 from pygame.locals import *
@@ -13,10 +13,10 @@ if not pg.get_init():
 WinSize = (16*30, 9*30)
 Clock = pg.time.Clock()
 
-# Player configurable data
-P1Char = ""
-P2Char = ""
-ChosenMap = ""
+# Player configurable data through the program
+P1Char = "" # Player 1 character
+P2Char = "" # Player 2 character
+ChosenMap = "" # Player chosen map
 Scale = None
 
 # Default colours
@@ -27,19 +27,21 @@ SubBGAccent = (212, 180, 131)
 DefColour = [SubBGColour, SubBGAccent]
 
 # Frequently used coordinates
-CentreX = WinSize[0] // 2
-CentreY = WinSize[1] // 2
-LeftX = int(WinSize[0] * 0.1)
-RightX = int(WinSize[0] * 0.9)
-TopY = int(WinSize[1] * 0.1)
-BottomY = int(WinSize[1] * 0.9)
+CentreX = WinSize[0] // 2 # Center of screen X axis
+CentreY = WinSize[1] // 2 # Center of screen Y axis
+LeftX = int(WinSize[0] * 0.1) # Far left of screen X axis
+RightX = int(WinSize[0] * 0.9) # Far right of screen X axis
+TopY = int(WinSize[1] * 0.1) # Far top of screen Y axis
+BottomY = int(WinSize[1] * 0.9) # Far bottom of screen Y axis
 
 # Load assets - Loads assets such as images and fonts
-Icon = pg.image.load("Game assets/Icon.png")
+Icon = pg.image.load("Game assets/Icon.png") # Icon
+## Character sprite image
 Char1Still = pg.image.load("Game assets/Char1Still.png")
 Char2Still = pg.image.load("Game assets/Char2Still.png")
 Char3Still = pg.image.load("Game assets/Char3Still.png")
 Char4Still = pg.image.load("Game assets/Char4Still.png")
+## Map background images
 BG1 = pg.image.load("Game assets/BG1_Ring.png")
 BG2 = pg.image.load("Game assets/BG2_Beach.png")
 BG3 = pg.image.load("Game assets/BG3_Woodlands.png")
@@ -58,11 +60,13 @@ ReturnButton = UIScript.TextButton(27, "Return", True, DefColour, RightX, Bottom
 CharSelectText = UIScript.TextGen(27, "Select a character", True, DefColour, CentreX, TopY) # At top centre
 P1Text = UIScript.TextGen(27, "Player 1", True, DefColour, LeftX, TopY) # At Top Left
 P2Text = UIScript.TextGen(27, "Player2", True, DefColour, RightX, TopY) # At Top Right
+# Character buttons which users press to select character, they are aligned in same Y pos but equally along the x axis of the screen
 Char1Button = UIScript.ImgButton(Char1Still, int((WinSize[0] * (1/5))), CentreY)
 Char2Button = UIScript.ImgButton(Char2Still, int((WinSize[0] * (2/5))), CentreY)
 Char3Button = UIScript.ImgButton(Char3Still, int((WinSize[0] * (3/5))), CentreY)
 Char4Button = UIScript.ImgButton(Char4Still, int((WinSize[0] * (4/5))), CentreY)
 MapSelectText = UIScript.TextGen(27, "Select a map", True, DefColour, CentreX, TopY) # At top centre
+# Background button which users press to select the map, they are aligned to be roughly centre of each quadrant
 BG1Button = UIScript.ImgButton(pg.transform.scale(BG1, (144, 81)), int((WinSize[0] * (1/3))), int((WinSize[1] * (1/3)))) # Centre of top left quadrant
 BG2Button = UIScript.ImgButton(pg.transform.scale(BG2, (16*9, 9*9)), int((WinSize[0] * (2/3))), int((WinSize[1] * (1/3)))) # Centre of top right quadrant
 BG3Button = UIScript.ImgButton(pg.transform.scale(BG3, (16*9, 9*9)), int((WinSize[0] * (1/3))), int((WinSize[1] * (2/3)))) # Centre of bottom left quadrant
@@ -74,20 +78,18 @@ pg.display.set_icon(Icon)
 pg.display.set_caption("PyG Battle program")
 Window = pg.display.set_mode(WinSize)
 # A loading screen which waists the players' time since this is not needed and also yes, I spelt it waist not waste
-Window.fill(BGColour, pg.Rect(0, 0, WinSize[0], WinSize[1]))
-pg.draw.rect(Window, BGAccent, (0, 0, WinSize[0], WinSize[1]), 5)
-LoadText.render(Window)
+Window.fill(BGColour, pg.Rect(0, 0, WinSize[0], WinSize[1])) # Background colour
+pg.draw.rect(Window, BGAccent, (0, 0, WinSize[0], WinSize[1]), 5) # Border of window
+LoadText.render(Window) # Notifies the user that the program is loading
 pg.display.update()
-pg.time.wait(500)
+pg.time.wait(400)
 # The welcome screen which notifies the user the pointless loading screen has been completed
-Window.fill(BGColour, pg.Rect(0, 0, WinSize[0], WinSize[1]))
-pg.draw.rect(Window, BGAccent, (0, 0, WinSize[0], WinSize[1]), 5)
-WelcomeText.render(Window)
+Window.fill(BGColour, pg.Rect(0, 0, WinSize[0], WinSize[1])) # Background colour
+pg.draw.rect(Window, BGAccent, (0, 0, WinSize[0], WinSize[1]), 5) # Border of window
+WelcomeText.render(Window) # Welcomes the user from loading screen
 pg.display.update()
-pg.time.wait(1600)
+pg.time.wait(1000)
 pg.display.update()
-
-pg.key.set_repeat(50, 20)
 
 # Game states which determines the current scene the player is in
 StateInMenu = True
@@ -246,6 +248,7 @@ Colours :
 Scale : 
 {Scale}
 ---------------------""")
+pg.key.set_repeat(50, 20) # Allows users to hold keys down for movement
 Player1 = SpriteClass.defSprite("Player 1", [WinSize[0] * 0.1 + 25, WinSize[1] - 56], P1Char)
 Player2 = SpriteClass.defSprite("Player 2", [WinSize[0] * 0.9 - 25, WinSize[1] - 56], P2Char)
 Window.blit(ChosenMap, (0, 0))
